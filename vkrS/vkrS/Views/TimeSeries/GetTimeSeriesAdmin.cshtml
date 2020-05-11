@@ -1,0 +1,81 @@
+﻿
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+@{
+    ViewBag.Title = "GetTimeSeriesAdmin";
+}
+
+<h2>GetTimeSeriesAdmin</h2>
+<div id="tableBlock"></div>
+@*<div id="createBlock">
+    <h3>Добавление рядов</h3>
+    <table>
+        <p><input type="file" name="file" id="addFile" multiple accept="txt">
+    </table>
+    <button id="addTimeSeries">Сохранить</button>
+</div>*@
+
+<form id="fileUpload" action="@Url.Action("AddTimeSeries")" method="POST" enctype="multipart/form-data">
+    <input id="fileInput" name="fileInput" type="file" />
+    <input type="submit" value="Upload file" id="btnFileUpload" />
+</form>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        GetAllTimeSeries();
+        $("#addTimeSeries").click(function (event) {
+            event.preventDefault();
+            AddTimeSeries();
+        });
+    });
+
+    // Получение всех рядов по ajax-запросу
+    function GetAllTimeSeries() {
+        $("#createBlock").css('display', 'block');
+        //$("#editBlock").css('display', 'none');
+        $.ajax({
+            url: '/TimeSeries/GetTimeSeries',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                WriteResponse(data);
+            },
+            error: function (data) {
+                alert('error' + data);
+            }
+        });
+    }
+
+    // вывод полученных данных на экран
+    function WriteResponse(ts) {
+        var strResult = "<table><th>дабл</th><th>путь</th>";
+        $.each(ts, function (index, t) {
+            strResult += "<tr><td>" + t.IsDouble + "</td><td> " + t.Path + "</td></tr>";
+        });
+        strResult += "</table>";
+        $("#tableBlock").html(strResult);
+    }
+
+    // Добавление
+    function AddTimeSeries() {
+        // получаем значения для добавляемой
+        //var ts = {
+        //    IsDouble: $('#addName').val(),
+        //    Path: $('#addAuthor').val()
+        //};
+        //var file: $('#addFile').val()
+
+        $.ajax({
+            url: '/TimeSeries/AddTimeSeries',
+            type: 'POST',
+            data: JSON.stringify($('#addFile').val()),
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                GetAllTimeSeries();
+            },
+            error: function () {
+                alert('error');
+            }
+        });
+    }
+</script>
+
