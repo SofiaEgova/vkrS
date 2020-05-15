@@ -11,6 +11,13 @@
 <div id="tableBlock"></div>
 
 @Html.DropDownList("ImageId", ViewBag.Images as SelectList)
+@Html.DropDownList("TimeSeriesId", ViewBag.TimeSeries as SelectList)
+
+<form id="imageUpload" @*action="@Url.Action("AddImage")"*@ method="POST" enctype="multipart/form-data">
+    <input id="imageInput" name="imageInput" type="text"/>
+    <input type="button" value="Upload image" id="btnImageUpload" onclick="AddImage()" />
+</form>
+<input type="button" value="Start" id="btnStart" onclick="Start()"/>
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -42,27 +49,36 @@
         });
         strResult += "</table>";
         $("#tableBlock").html(strResult);
-
     }
 
-    // Добавление
-    function AddTimeSeries() {
-        // получаем значения для добавляемой
-        var ts = {
-            IsDouble: $('#addName').val(),
-            Path: $('#addAuthor').val()
-        };
-
+    function AddImage() {
         $.ajax({
-            url: '/api/TimeSeries',
+            url: '@Url.Action("AddImage")',
             type: 'POST',
-            data: JSON.stringify(ts),
+            data: JSON.stringify({ 'imageInput': $("#imageInput").val() }),
             contentType: "application/json;charset=utf-8",
             success: function (data) {
-                GetAllBooks();
+                GetAllTimeSeries();
+                $("#imageInput").val('');
             },
-            error: function (x, y) {
-                alert(x + '\n' + y);
+            error: function () {
+                alert('error');
+            }
+        });
+    }
+
+    function Start() {
+        //debugger
+        $.ajax({
+            url: '@Url.Action("Start")',
+            type: 'POST',
+            data: JSON.stringify({ 'imageInput': $("#ImageId").val(), 'ts': $("#TimeSeriesId").val()}),
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                GetAllTimeSeries();
+            },
+            error: function () {
+                alert('error');
             }
         });
     }
