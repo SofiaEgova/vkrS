@@ -20,6 +20,7 @@ namespace vkrS.Models
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<TimeSeries> TimeSeries { get; set; }
         public virtual DbSet<Image> Images { get; set; }
+        public virtual DbSet<Result> Results { get; set; }
 
         public override int SaveChanges()
         {

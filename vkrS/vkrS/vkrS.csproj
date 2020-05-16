@@ -207,8 +207,21 @@
     <Compile Include="Migrations\202005071720541_four.designer.cs">
       <DependentUpon>202005071720541_four.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005161022363_result.cs" />
+    <Compile Include="Migrations\202005161022363_result.designer.cs">
+      <DependentUpon>202005161022363_result.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005161024562_result1.cs" />
+    <Compile Include="Migrations\202005161024562_result1.designer.cs">
+      <DependentUpon>202005161024562_result1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005161032150_result2.cs" />
+    <Compile Include="Migrations\202005161032150_result2.designer.cs">
+      <DependentUpon>202005161032150_result2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Image.cs" />
+    <Compile Include="Models\Result.cs" />
     <Compile Include="Models\TimeSeries.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\VKRDbContext.cs" />
@@ -311,6 +324,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005071720541_four.resx">
       <DependentUpon>202005071720541_four.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005161022363_result.resx">
+      <DependentUpon>202005161022363_result.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005161024562_result1.resx">
+      <DependentUpon>202005161024562_result1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005161032150_result2.resx">
+      <DependentUpon>202005161032150_result2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

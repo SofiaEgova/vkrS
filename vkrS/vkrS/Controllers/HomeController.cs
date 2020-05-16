@@ -52,20 +52,24 @@ namespace vkrS.Controllers
                 var timeseries = db.TimeSeries.FirstOrDefault(t => t.TimeSeriesId == tsId);
                 if (image != null && timeseries != null)
                 {
-                    var timeStart = DateTime.Now;
+                    var startTime = System.Diagnostics.Stopwatch.StartNew();
                     Process process = new Process { StartInfo = new ProcessStartInfo { FileName = "cmd.exe", RedirectStandardInput = true, RedirectStandardOutput = true, UseShellExecute = false, Arguments= "/c docker pull " + image.Link } };
 
                     process.Start();
                     
                     process.WaitForExit();
-                    // не v8, а имя !!!
-                    process.StartInfo=new ProcessStartInfo {  FileName = "cmd.exe", RedirectStandardInput = true, RedirectStandardOutput = true, UseShellExecute = false, Arguments = "/c docker run -e ARRAY=" + timeseries.Elements.Replace(Environment.NewLine, "") + " v8" } ;
+                    int indexOfChar = image.Link.IndexOf('/')+1;
+                    string im = image.Link.Remove(0, indexOfChar);
+                    process.StartInfo=new ProcessStartInfo {  FileName = "cmd.exe", RedirectStandardInput = true, RedirectStandardOutput = true, UseShellExecute = false, Arguments = "/c docker run -e ARRAY=" + timeseries.Elements.Replace(Environment.NewLine, "") + " "+im } ;
                     process.Start();
                     StreamReader srIncoming = process.StandardOutput;
 
                     string result = srIncoming.ReadToEnd();
-                    var time = DateTime.Now - timeStart;
+                    startTime.Stop();
+                    var resultTime = startTime.Elapsed;
 
+                    db.Results.Add(new Result { ResultId = Guid.NewGuid(), ImageId = image.ImageId, TimeSeriesId = timeseries.TimeSeriesId, Accuracy = "1", Time = resultTime });
+                    db.SaveChanges();
                 }
             }
         }
