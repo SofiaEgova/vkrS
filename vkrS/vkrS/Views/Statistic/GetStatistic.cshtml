@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "GetStatistic";
+}
+
+<h2 class="h3">Статистика</h2>
+
+@foreach (var t in ViewBag.Ts)
+{
+    <h3>@t.Title</h3>
+    <div class="table-responsive" id="">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Метод</th>
+                    <th>Оценка точности</th>
+                    <th>Время</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var r in ViewBag.Results)
+                {
+                   if (@r.TimeSeriesId == @t.TimeSeriesId)
+                    {
+                        <tr>
+                            <th>@r.Image.Link</th>
+                            <th>@r.Accuracy</th>
+                            <th>@r.Time</th>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+}

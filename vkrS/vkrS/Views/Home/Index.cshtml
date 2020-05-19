@@ -1,55 +1,60 @@
 ﻿@*@Scripts.Render("~/scripts/jquery-1.7.1.js")*@
 @*@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")*@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-<form method="post" action="~/Home/Login">
-    <label>Логин:</label><br />
-    <input type="text" name="login" /><br /><br />
-    <label>Пароль:</label><br />
-    <input type="text" name="password" /><br /><br />
-    <button id="signIn">Войти</button>
+@Styles.Render("~/Content/css")
+
+<form method="post" action="~/Home/Login" class="text-center">
+    <h1 class="h3">Войти</h1>
+    <input type="text" name="login" id="login" class="center-block form-control" required autofocus placeholder="Логин" />
+    <input type="text" style = "margin-top: 0.5rem" name="password" id="password" class="center-block form-control" required autofocus placeholder="Пароль" />
+    <button class="btn btn-primary btn-lg" style = "margin-top: 0.5rem" id="signIn">Войти</button>
+
 </form>
+<div class="text-center">
+    @Html.ActionLink("Методы", "GetImages", "Image", null, new { @class = "btn btn-danger btn-lg ", @style = "margin-top: 0.5rem" })
+</div>
 <div id="tableBlock"></div>
 
-@Html.DropDownList("ImageId", ViewBag.Images as SelectList)
+@*@Html.DropDownList("ImageId", ViewBag.Images as SelectList)
 @Html.DropDownList("TimeSeriesId", ViewBag.TimeSeries as SelectList)
 
-<form id="imageUpload" @*action="@Url.Action("AddImage")"*@ method="POST" enctype="multipart/form-data">
-    <input id="imageInput" name="imageInput" type="text"/>
+<form id="imageUpload" @*action="@Url.Action("AddImage")" method="POST" enctype="multipart/form-data">
+    <input id="imageInput" name="imageInput" type="text" />
     <input type="button" value="Upload image" id="btnImageUpload" onclick="AddImage()" />
 </form>
-<input type="button" value="Start" id="btnStart" onclick="Start()"/>
+<input type="button" value="Start" id="btnStart" onclick="Start()" />*@
 
-<script type="text/javascript">
+@*<script type="text/javascript">
     $(document).ready(function () {
         GetAllTimeSeries();
     });
 
-    // Получение всех рядов по ajax-запросу
-    function GetAllTimeSeries() {
-        $("#createBlock").css('display', 'block');
-        //$("#editBlock").css('display', 'none');
-        $.ajax({
-            url: '/TimeSeries/GetTimeSeries',
-            type: 'GET',
-            dataType: 'json',
-            success: function (data) {
-                WriteResponse(data);
-            },
-            error: function (data) {
-                alert('error' + data);
-            }
-        });
-    }
+    //// Получение всех рядов по ajax-запросу
+    //function GetAllTimeSeries() {
+    //    $("#createBlock").css('display', 'block');
+    //    //$("#editBlock").css('display', 'none');
+    //    $.ajax({
+    //        url: '/TimeSeries/GetTimeSeries',
+    //        type: 'GET',
+    //        dataType: 'json',
+    //        success: function (data) {
+    //            WriteResponse(data);
+    //        },
+    //        error: function (data) {
+    //            alert('error' + data);
+    //        }
+    //    });
+    //}
 
-    // вывод полученных данных на экран
-    function WriteResponse(ts) {
-        var strResult = "<table><th>дабл</th><th>путь</th>";
-        $.each(ts, function (index, t) {
-            strResult += "<tr><td>" + t.IsDouble + "</td><td> " + t.Path + "</td></tr>";
-        });
-        strResult += "</table>";
-        $("#tableBlock").html(strResult);
-    }
+    //// вывод полученных данных на экран
+    //function WriteResponse(ts) {
+    //    var strResult = "<table><th>дабл</th><th>путь</th>";
+    //    $.each(ts, function (index, t) {
+    //        strResult += "<tr><td>" + t.IsDouble + "</td><td> " + t.Path + "</td></tr>";
+    //    });
+    //    strResult += "</table>";
+    //    $("#tableBlock").html(strResult);
+    //}
 
     function AddImage() {
         $.ajax({
@@ -83,4 +88,4 @@
         });
     }
 
-</script>
+</script>*@

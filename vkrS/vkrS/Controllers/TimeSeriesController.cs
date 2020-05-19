@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Http.Description;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using vkrS.Models;
 
 namespace vkrS.Controllers
@@ -21,64 +23,71 @@ namespace vkrS.Controllers
 
         public ActionResult GetTimeSeriesAdmin()
         {
+            var ts = db.TimeSeries;
+            ViewBag.TimeSeries = ts;
+            ViewBag.TimeSeriesCount = db.TimeSeries.Count();
             return View();
         }
 
         [HttpPost]
-        public void AddTimeSeries()
+        public ActionResult AddTimeSeries(HttpPostedFileBase fileInput, string title, string description)
         {
-            HttpPostedFileBase file = Request.Files["fileInput"];
+            if (fileInput == null) return null;
+            int c = 0;
             string elements = "";
-            using (StreamReader sr = new StreamReader(file.InputStream))
+            using (StreamReader sr = new StreamReader(fileInput.InputStream))
             {
-                elements+=sr.ReadToEnd();
+                string l = "";
+                while ((l = sr.ReadLine()) != null)
+                {
+                    c++;
+                    elements += l;
+
+                }
             }
-            // считать первое число, если оно дабл то изменить на дабл!!!
-            db.TimeSeries.Add(new TimeSeries { TimeSeriesId = Guid.NewGuid(), IsDouble = true, Elements = elements });
+            int[] arr = new int[c];
+            for (int i = 0; i < c; i++)
+            {
+                arr[i] = Convert.ToInt32(elements[i]);
+            }
+            var el = elements;
+            elements = elements.Replace(Environment.NewLine, "");
+            if (title == string.Empty) title = fileInput.FileName;
+            if (description == string.Empty) description = "";
+            var ts = new TimeSeries { TimeSeriesId = Guid.NewGuid(), AmountOfElements = c, Title = title, Elements = elements, Description = description };
+            db.TimeSeries.Add(ts);
             db.SaveChanges();
+            ViewBag.Title = title;
+            //ViewBag.Arr = JsonConvert.SerializeObject(arr);
+
+
+            var chartData = new StringBuilder();
+            chartData.Append("[");
+            for (int i = 0; i < c; i++)
+            {
+                chartData.Append(string.Format("{0},", elements[i]));
+            }
+            chartData.Append("]");
+            ViewBag.chartData = chartData;
+
+            return View("TimeSeriesVisual");
         }
 
-        //// GET: api/TimeSeries/5
-        //[ResponseType(typeof(TimeSeries))]
-        //public IHttpActionResult GetTimeSeries(Guid id)
-        //{
-        //    TimeSeries timeSeries = db.TimeSeries.Find(id);
-        //    if (timeSeries == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public ActionResult VisualTimeSeries(string id)
+        {
+            var idts = Guid.Parse(id);
+            var ts = db.TimeSeries.FirstOrDefault(t => t.TimeSeriesId == idts);
 
-        //    return Ok(timeSeries);
-        //}
+            var chartData = new StringBuilder();
+            chartData.Append("[");
+            for (int i = 0; i < ts.AmountOfElements; i++)
+            {
+                chartData.Append(string.Format("{0},", ts.Elements[i]));
+            }
+            chartData.Append("]");
+            ViewBag.chartData = chartData;
 
-        //// POST: api/TimeSeries
-        //[ResponseType(typeof(TimeSeries))]
-        //public IHttpActionResult PostTimeSeries(TimeSeries timeSeries)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    db.TimeSeries.Add(timeSeries);
-
-        //    try
-        //    {
-        //        db.SaveChanges();
-        //    }
-        //    catch (DbUpdateException)
-        //    {
-        //        if (TimeSeriesExists(timeSeries.TimeSeriesId))
-        //        {
-        //            return Conflict();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return CreatedAtRoute("DefaultApi", new { id = timeSeries.TimeSeriesId }, timeSeries);
-        //}
+            return View("TimeSeriesVisual");
+        }
     }
 }

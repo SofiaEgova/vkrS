@@ -14,10 +14,17 @@ namespace vkrS.Models
         [Required]
         [DataMember]
         public Guid TimeSeriesId { get; set; }
+        
+        [DataMember]
+        public string Description { get; set; }
 
         [Required]
         [DataMember]
-        public bool IsDouble { get; set; }
+        public string Title { get; set; }
+
+        [Required]
+        [DataMember]
+        public int AmountOfElements { get; set; }
 
         [Required]
         [DataMember]

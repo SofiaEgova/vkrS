@@ -1,0 +1,42 @@
+﻿
+@Html.ActionLink("Статистика", "GetStatistic", "Statistic", null, new { area = "", @class = "btn btn-sm " })
+<div class="table-responsive" id="">
+    <h3>Результат</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Оценка</th>
+                <th>Время</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>@ViewBag.Result.Accuracy</th>
+                <th>@ViewBag.Result.Time</th>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="table-responsive" id="">
+    <h3>Все результаты по данному временному ряду</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Метод</th>
+                <th>Оценка</th>
+                <th>Время</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var r in ViewBag.AllResults)
+            {
+                <tr>
+                    <th>@r.Image.Link</th>
+                    <th>@r.Accuracy</th>
+                    <th>@r.Time</th>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

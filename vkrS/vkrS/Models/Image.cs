@@ -14,6 +14,9 @@ namespace vkrS.Models
         [Required]
         [DataMember]
         public Guid ImageId { get; set; }
+        
+        [DataMember]
+        public string Description { get; set; }
 
         [Required]
         [DataMember]

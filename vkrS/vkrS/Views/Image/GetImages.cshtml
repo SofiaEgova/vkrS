@@ -1,0 +1,61 @@
+﻿<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+@Styles.Render("~/Content/css")
+
+<h2 class="h3">Методы</h2>
+
+@Html.ActionLink("Статистика", "GetStatistic", "Statistic", null, new { area = "", @class = "btn btn-sm " })
+
+<div class="table-responsive table-hover" id="">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Описание</th>
+                <th>Среднее качество</th> @*возвращать среднюю оценку всех результатов по этому методу*@
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var i in ViewBag.Images)
+            {
+
+                <tr>
+                    <th>@i.Link</th>
+                    <th>@i.Description</th>
+                    <th>-</th>
+                    <th class=""> @Html.ActionLink("Перейти", "GetOpenImage", "OpenImage", new { id = i.ImageId.ToString() }, new { area = "", @class = "btn-default" })</th>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<h2 class="h3">Добавление метода</h2>
+<div class="row">
+    <div class="col-sm-10">
+        <input id="imageInput" type="text" class="form-control" placeholder="user/image" />
+        <textarea type="text" id="description" class="form-control" placeholder="Описание" rows="3" style="resize:none;margin-top:0.5rem"></textarea>
+        <input type="button" value="Добавить метод" class="btn btn-sm btn-primary" style="margin-top:0.5rem" onclick="AddImage()" />
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    });
+
+    function AddImage() {
+        $.ajax({
+            url: '@Url.Action("AddImage")',
+            type: 'POST',
+            data: JSON.stringify({ 'imageInput': $("#imageInput").val(), 'description': $("#description").val() }),
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                $("#imageInput").val('');
+                $("#description").val('');
+            },
+            error: function () {
+                alert('error');
+            }
+        });
+    }
+</script>

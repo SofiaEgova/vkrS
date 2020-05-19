@@ -1,0 +1,30 @@
+﻿<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+
+<h2>@ViewBag.Title</h2>
+<canvas id="canvas" class=""></canvas>
+
+@ViewBag.chartData
+<script type="text/javascript">
+        var canvas = document.getElementById("canvas");
+        var chart = new Chart(canvas, {
+            type: 'line',
+            data: {
+                labels:@ViewBag.chartData,
+                datasets: @ViewBag.chartData;
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: false
+                        }
+                    }]
+                },
+                legend: {
+                    display: false,
+                }
+            }
+    });
+    chart.datasets=@ViewBag.chartData;
+    chart.update();
+</script>

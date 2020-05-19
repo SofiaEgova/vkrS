@@ -190,8 +190,11 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImageController.cs" />
+    <Compile Include="Controllers\OpenImageController.cs" />
+    <Compile Include="Controllers\ResultController.cs" />
+    <Compile Include="Controllers\StatisticController.cs" />
     <Compile Include="Controllers\TimeSeriesController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -218,6 +221,18 @@
     <Compile Include="Migrations\202005161032150_result2.cs" />
     <Compile Include="Migrations\202005161032150_result2.designer.cs">
       <DependentUpon>202005161032150_result2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005171511344_desc.cs" />
+    <Compile Include="Migrations\202005171511344_desc.designer.cs">
+      <DependentUpon>202005171511344_desc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005171547490_descts.cs" />
+    <Compile Include="Migrations\202005171547490_descts.designer.cs">
+      <DependentUpon>202005171547490_descts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005171637460_desci.cs" />
+    <Compile Include="Migrations\202005171637460_desci.designer.cs">
+      <DependentUpon>202005171637460_desci.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Image.cs" />
@@ -280,8 +295,12 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\TimeSeries\GetTimeSeries.cshtml" />
     <Content Include="Views\TimeSeries\GetTimeSeriesAdmin.cshtml" />
+    <Content Include="Views\Image\GetImages.cshtml" />
+    <Content Include="Views\OpenImage\GetOpenImage.cshtml" />
+    <Content Include="Views\Statistic\GetStatistic.cshtml" />
+    <Content Include="Views\Result\GetResult.cshtml" />
+    <Content Include="Views\TimeSeries\TimeSeriesVisual.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -333,6 +352,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005161032150_result2.resx">
       <DependentUpon>202005161032150_result2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005171511344_desc.resx">
+      <DependentUpon>202005171511344_desc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005171547490_descts.resx">
+      <DependentUpon>202005171547490_descts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005171637460_desci.resx">
+      <DependentUpon>202005171637460_desci.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

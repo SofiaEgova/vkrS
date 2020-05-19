@@ -1,0 +1,36 @@
+﻿<h2 class="h3">Метод @ViewBag.Link</h2>
+
+<div class="table-responsive" id="">
+    <h3>Ряды</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Количество элементов</th>
+                <th>Описание</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var t in ViewBag.TimeSeries)
+            {
+                <tr>
+                    <th>@t.Title</th>
+                    <th>@t.AmountOfElements</th>
+                    <th>@t.Description</th>
+                    <th>
+                        @Html.ActionLink("Выполнить", "Start", "OpenImage", new { imageInput = ViewBag.Id, ts = t.TimeSeriesId}, new { area = "", @class = "btn btn-default btn-sm" })
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    });
+
+</script>
