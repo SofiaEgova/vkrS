@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using vkrS.Models;
 using System.Data.Entity;
+using System.IO;
+using IronPdf;
 
 namespace vkrS.Controllers
 {
@@ -23,6 +25,13 @@ namespace vkrS.Controllers
             ViewBag.AllResults = allResults;
             
             return View();
+        }
+
+        public void pdf()
+        {
+            //var Renderer = new IronPdf.HtmlToPdf();
+            //var PDF = Renderer.RenderHtmlAsPdf("<img src='icons/iron.png'>", @"C:\site\assets\");
+            //PDF.SaveAs("test.pdf");
         }
     }
 }

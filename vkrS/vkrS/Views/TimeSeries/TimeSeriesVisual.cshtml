@@ -1,30 +1,71 @@
 ﻿<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
 
 <h2>@ViewBag.Title</h2>
-<canvas id="canvas" class=""></canvas>
+<div id="container"></div>
 
-@ViewBag.chartData
 <script type="text/javascript">
         var canvas = document.getElementById("canvas");
-        var chart = new Chart(canvas, {
-            type: 'line',
-            data: {
-                labels:@ViewBag.chartData,
-                datasets: @ViewBag.chartData;
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: false
-                        }
-                    }]
-                },
-                legend: {
-                    display: false,
-                }
+
+    Highcharts.chart('container', {
+        chart: {
+            zoomType: 'x'
+        },
+        title: {
+            text: ''
+        },
+        subtitle: {
+            text: document.ontouchstart === undefined ?
+                'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+        },
+        xAxis: {
+            title: {
+                text: 'Элементы'
             }
+        },
+        yAxis: {
+            visible:false
+        },
+        legend: {
+            enabled: false
+        },
+        plotOptions: {
+            area: {
+                fillColor: {
+                    linearGradient: {
+                        x1: 0,
+                        y1: 0,
+                        x2: 0,
+                        y2: 1
+                    },
+                    stops: [
+                        [0, Highcharts.getOptions().colors[0]],
+                        [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                    ]
+                },
+                marker: {
+                    radius: 2
+                },
+                lineWidth: 1,
+                states: {
+                    hover: {
+                        lineWidth: 1
+                    }
+                },
+                threshold: null
+            }
+        },
+
+        series: [{
+            type: 'area',
+            data: @ViewBag.chartData
+        }]
     });
-    chart.datasets=@ViewBag.chartData;
-    chart.update();
+
+
 </script>

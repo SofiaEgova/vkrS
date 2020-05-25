@@ -22,6 +22,7 @@ namespace vkrS.Controllers
                 ViewBag.Link = image.Link;
                 ViewBag.Id = image.ImageId;
                 ViewBag.TimeSeries = db.TimeSeries;
+                ViewBag.res = db.Results;
             }
             return View();
         }
@@ -31,6 +32,7 @@ namespace vkrS.Controllers
         {
             if (imageInput != null && ts != null)
             {
+                int total = (int)GC.GetTotalMemory(true);
                 Guid imId = Guid.Parse(imageInput);
                 Guid tsId = Guid.Parse(ts);
                 var image = db.Images.FirstOrDefault(i => i.ImageId == imId);
@@ -38,24 +40,56 @@ namespace vkrS.Controllers
                 if (image != null && timeseries != null)
                 {
                     var startTime = System.Diagnostics.Stopwatch.StartNew();
-                    Process process = new Process { StartInfo = new ProcessStartInfo { FileName = "cmd.exe", RedirectStandardInput = true,
-                        RedirectStandardOutput = true, UseShellExecute = false, Arguments = "/c docker pull " + image.Link } };
+                    Process process = new Process
+                    {
+                        StartInfo = new ProcessStartInfo
+                        {
+                            FileName = "cmd.exe",
+                            RedirectStandardInput = true,
+                            RedirectStandardOutput = true,
+                            UseShellExecute = false,
+                            Arguments = "/c docker pull " + image.Link
+                        }
+                    };
 
-                    process.Start();
+                    //process.Start();
+                    //process.WaitForExit();
 
-                    process.WaitForExit();
-                    int indexOfChar = image.Link.IndexOf('/') + 1;
-                    string im = image.Link.Remove(0, indexOfChar);
-                    process.StartInfo = new ProcessStartInfo { FileName = "cmd.exe", RedirectStandardInput = true, RedirectStandardOutput = true,
-                        UseShellExecute = false, Arguments = "/c docker run -e ARRAY=" + timeseries.Elements.Replace(Environment.NewLine, "") + " " + im };
-                    process.Start();
-                    StreamReader srIncoming = process.StandardOutput;
+                    float cpu;
+                    string result;
+                    using (PerformanceCounter pcProcess = new PerformanceCounter("Process", "% Processor Time", "_Total"))
+                    {
+                        cpu = pcProcess.NextValue();
 
-                    string result = srIncoming.ReadToEnd();
-                    startTime.Stop();
+                        int indexOfChar = image.Link.IndexOf('/') + 1;
+                        string im = image.Link.Remove(0, indexOfChar);
+                        process.StartInfo = new ProcessStartInfo
+                        {
+                            FileName = "cmd.exe",
+                            RedirectStandardInput = true,
+                            RedirectStandardOutput = true,
+                            UseShellExecute = false,
+                            Arguments = "/c docker run -e ARRAY=" + timeseries.Elements.Replace(Environment.NewLine, "") + " " + im
+                        };
+                        process.Start();
+                        StreamReader srIncoming = process.StandardOutput;
+
+                        result = srIncoming.ReadToEnd();
+                        startTime.Stop();
+                        process.WaitForExit();
+                        cpu = pcProcess.NextValue() / (float)Environment.ProcessorCount;
+                    }
+
+                    var c = (int)cpu;
+
+                    process.Close();
                     var resultTime = startTime.Elapsed;
 
-                    var res = new Result { ResultId = Guid.NewGuid(), ImageId = image.ImageId, TimeSeriesId = timeseries.TimeSeriesId, Accuracy = result, Time = resultTime };
+                    total = (int)GC.GetTotalMemory(true) - total;
+
+                    total = ((int)(total / (float)Environment.ProcessorCount))/1024;
+                    
+                    var res = new Result { ResultId = Guid.NewGuid(), ImageId = image.ImageId, TimeSeriesId = timeseries.TimeSeriesId, Res = result, Time = resultTime , Memory=total.ToString(), CPU=c+"%"};
                     db.Results.Add(res);
                     db.SaveChanges();
                     return Redirect("~/Result/GetResult/" + res.ResultId);

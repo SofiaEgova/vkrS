@@ -3,7 +3,7 @@
 
 <h2 class="h3">Методы</h2>
 
-@Html.ActionLink("Статистика", "GetStatistic", "Statistic", null, new { area = "", @class = "btn btn-sm " })
+@Html.ActionLink("Статистика", "GetStatistic", "Statistic", null, new { area = "", @class = "btn-default" })
 
 <div class="table-responsive table-hover" id="">
     <table class="table table-striped">
@@ -11,7 +11,7 @@
             <tr>
                 <th>Название</th>
                 <th>Описание</th>
-                <th>Среднее качество</th> @*возвращать среднюю оценку всех результатов по этому методу*@
+                @*<th>Среднее качество</th>возвращать среднюю оценку всех результатов по этому методу*@
             </tr>
         </thead>
         <tbody>
@@ -21,7 +21,6 @@
                 <tr>
                     <th>@i.Link</th>
                     <th>@i.Description</th>
-                    <th>-</th>
                     <th class=""> @Html.ActionLink("Перейти", "GetOpenImage", "OpenImage", new { id = i.ImageId.ToString() }, new { area = "", @class = "btn-default" })</th>
                 </tr>
             }

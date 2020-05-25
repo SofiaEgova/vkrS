@@ -58,17 +58,21 @@ namespace vkrS.Controllers
             db.TimeSeries.Add(ts);
             db.SaveChanges();
             ViewBag.Title = title;
-            //ViewBag.Arr = JsonConvert.SerializeObject(arr);
-
 
             var chartData = new StringBuilder();
             chartData.Append("[");
             for (int i = 0; i < c; i++)
             {
+                if (i == ts.AmountOfElements - 1)
+                {
+                    chartData.Append(string.Format("{0}", ts.Elements[i]));
+                    break;
+                }
                 chartData.Append(string.Format("{0},", elements[i]));
             }
             chartData.Append("]");
             ViewBag.chartData = chartData;
+            ViewBag.Title = ts.Title;
 
             return View("TimeSeriesVisual");
         }
@@ -82,10 +86,16 @@ namespace vkrS.Controllers
             chartData.Append("[");
             for (int i = 0; i < ts.AmountOfElements; i++)
             {
+                if(i== ts.AmountOfElements - 1)
+                {
+                    chartData.Append(string.Format("{0}", ts.Elements[i]));
+                    break;
+                }
                 chartData.Append(string.Format("{0},", ts.Elements[i]));
             }
             chartData.Append("]");
             ViewBag.chartData = chartData;
+            ViewBag.Title = ts.Title;
 
             return View("TimeSeriesVisual");
         }

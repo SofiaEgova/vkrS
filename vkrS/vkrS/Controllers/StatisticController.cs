@@ -16,7 +16,7 @@ namespace vkrS.Controllers
         public ActionResult GetStatistic()
         {
             ViewBag.Results = db.Results.Include(r=>r.Image);
-            ViewBag.TS = db.TimeSeries.Where(t=>t.Results.Count>0);
+            ViewBag.TS = db.TimeSeries.Where(t=>t.Results.Count>0).OrderByDescending(t=>t.Results.Count);
             return View();
         }
     }

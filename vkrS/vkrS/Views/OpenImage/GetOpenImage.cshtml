@@ -18,7 +18,10 @@
                     <th>@t.AmountOfElements</th>
                     <th>@t.Description</th>
                     <th>
-                        @Html.ActionLink("Выполнить", "Start", "OpenImage", new { imageInput = ViewBag.Id, ts = t.TimeSeriesId}, new { area = "", @class = "btn btn-default btn-sm" })
+                        @Html.ActionLink("Посмотреть", "VisualTimeSeries", "TimeSeries", new { id = t.TimeSeriesId }, new { area = "", @class = "btn-default" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Выполнить", "Start", "OpenImage", new { imageInput = ViewBag.Id, ts = t.TimeSeriesId }, new { area = "", @class = "btn btn-default btn-sm" })
                     </th>
                 </tr>
             }

@@ -1,18 +1,22 @@
 ﻿
-@Html.ActionLink("Статистика", "GetStatistic", "Statistic", null, new { area = "", @class = "btn btn-sm " })
+@Html.ActionLink("Статистика", "GetStatistic", "Statistic", null, new { area = "", @class = "btn-default" })
 <div class="table-responsive" id="">
     <h3>Результат</h3>
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Оценка</th>
                 <th>Время</th>
+                <th>Оценка</th>
+                <th>Память (кб)</th>
+                <th>Загрузка процессора</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <th>@ViewBag.Result.Accuracy</th>
                 <th>@ViewBag.Result.Time</th>
+                <th>@ViewBag.Result.Res</th>
+                <th>@ViewBag.Result.Memory</th>
+                <th>@ViewBag.Result.CPU</th>
             </tr>
         </tbody>
     </table>
@@ -24,18 +28,22 @@
         <thead>
             <tr>
                 <th>Метод</th>
-                <th>Оценка</th>
                 <th>Время</th>
+                <th>Оценка</th>
+                <th>Память (кб)</th>
+                <th>Загрузка процессора</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var r in ViewBag.AllResults)
             {
-                <tr>
-                    <th>@r.Image.Link</th>
-                    <th>@r.Accuracy</th>
-                    <th>@r.Time</th>
-                </tr>
+            <tr>
+                <th>@r.Image.Link</th>
+                <th>@r.Time</th>
+                <th>@r.Res</th>
+                <th>@r.Memory</th>
+                <th>@r.CPU</th>
+            </tr>
             }
         </tbody>
     </table>

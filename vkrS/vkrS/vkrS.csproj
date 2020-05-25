@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.4.0\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -47,10 +46,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="IronPdf, Version=2020.3.2.0, Culture=neutral, PublicKeyToken=94e1c31412563c75, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPdf.2020.3.2\lib\net40\IronPdf.dll</HintPath>
+    </Reference>
+    <Reference Include="IronPdf.Assets.Rendering.Windows, Version=18.0.0.0, Culture=neutral, PublicKeyToken=94e1c31412563c75, processorArchitecture=MSIL">
+      <HintPath>..\packages\Iron.Assets.Rendering.Windows.18.0.1\lib\net40\IronPdf.Assets.Rendering.Windows.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
@@ -198,41 +203,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202005061850089_sec.cs" />
-    <Compile Include="Migrations\202005061850089_sec.designer.cs">
-      <DependentUpon>202005061850089_sec.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005071716423_three.cs" />
-    <Compile Include="Migrations\202005071716423_three.designer.cs">
-      <DependentUpon>202005071716423_three.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005071720541_four.cs" />
-    <Compile Include="Migrations\202005071720541_four.designer.cs">
-      <DependentUpon>202005071720541_four.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005161022363_result.cs" />
-    <Compile Include="Migrations\202005161022363_result.designer.cs">
-      <DependentUpon>202005161022363_result.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005161024562_result1.cs" />
-    <Compile Include="Migrations\202005161024562_result1.designer.cs">
-      <DependentUpon>202005161024562_result1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005161032150_result2.cs" />
-    <Compile Include="Migrations\202005161032150_result2.designer.cs">
-      <DependentUpon>202005161032150_result2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005171511344_desc.cs" />
-    <Compile Include="Migrations\202005171511344_desc.designer.cs">
-      <DependentUpon>202005171511344_desc.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005171547490_descts.cs" />
-    <Compile Include="Migrations\202005171547490_descts.designer.cs">
-      <DependentUpon>202005171547490_descts.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005171637460_desci.cs" />
-    <Compile Include="Migrations\202005171637460_desci.designer.cs">
-      <DependentUpon>202005171637460_desci.cs</DependentUpon>
+    <Compile Include="Migrations\202005250944283_rescpu.cs" />
+    <Compile Include="Migrations\202005250944283_rescpu.Designer.cs">
+      <DependentUpon>202005250944283_rescpu.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Image.cs" />
@@ -275,6 +248,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="libman.json" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -335,32 +309,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202005061850089_sec.resx">
-      <DependentUpon>202005061850089_sec.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005071716423_three.resx">
-      <DependentUpon>202005071716423_three.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005071720541_four.resx">
-      <DependentUpon>202005071720541_four.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005161022363_result.resx">
-      <DependentUpon>202005161022363_result.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005161024562_result1.resx">
-      <DependentUpon>202005161024562_result1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005161032150_result2.resx">
-      <DependentUpon>202005161032150_result2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005171511344_desc.resx">
-      <DependentUpon>202005171511344_desc.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005171547490_descts.resx">
-      <DependentUpon>202005171547490_descts.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005171637460_desci.resx">
-      <DependentUpon>202005171637460_desci.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202005250944283_rescpu.resx">
+      <DependentUpon>202005250944283_rescpu.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
@@ -396,10 +346,7 @@
       <ErrorText>Данный проект ссылается на пакеты NuGet, отсутствующие на этом компьютере. Используйте восстановление пакетов NuGet, чтобы скачать их.  Дополнительную информацию см. по адресу: http://go.microsoft.com/fwlink/?LinkID=322105. Отсутствует следующий файл: {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.0\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.0\build\EntityFramework.targets'))" />
   </Target>
-  <Import Project="..\packages\EntityFramework.6.4.0\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -21,15 +21,22 @@ namespace vkrS.Models
         [Required]
         [DataMember]
         public Guid TimeSeriesId { get; set; }
-
-        [Required]
+        
         [DataMember]
-        public string Accuracy { get; set; }
+        public string Res { get; set; }
 
         [Required]
         [DataMember]
         public TimeSpan Time { get; set; }
         
+        [Required]
+        [DataMember]
+        public string Memory { get; set; }
+
+        [Required]
+        [DataMember]
+        public string CPU { get; set; }
+
         public virtual Image Image { get; set; }
         
         public virtual TimeSeries TimeSeries { get; set; }
